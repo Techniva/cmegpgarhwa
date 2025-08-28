@@ -1,0 +1,87 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       Int      @id @default(autoincrement()) // incremental numeric ID
+  name     String
+  email    String   @unique
+  password String
+  role     Role     @default(employee)
+
+  // ✅ Relation: A user can create many applicants
+  applicants Applicant[]
+}
+
+enum Role {
+  admin
+  employee
+}
+
+model Applicant {
+  id                        Int      @id @default(autoincrement())
+  applicantName             String
+  dob                       String
+  education                 String
+  panCard                   String
+  gender                    String
+  mobile                    String
+  address                   String
+  block                     String
+  fatherOrHusband           String
+  mother                    String
+  panchayat                 String
+  familyIncome              String
+  bankAccount               String
+  ifsc                      String
+  sanctionYear              String
+  disbursementYear          String
+  village                   String
+  aadhar                    String
+  residentialCert           String
+  casteCert                 String
+  incomeCert                String
+  category                  String
+  loanType                  String
+  businessName              String
+  shopName                  String
+  guarantorName             String
+  guarantorFather           String
+  guarantorAddress          String
+  guarantorOffice           String
+  guarantorOccupation       String
+  guarantorEmployerType     String
+  guarantorDesignation      String
+  guarantorMobile           String
+  guarantorAadhar           String
+  guarantorAffidavit        String
+  marginAmountDraft         String
+  corporation               String
+  sanctionLetterNo          String
+  serialNoCorporation       String
+  sanctionAmount            String
+  disbursementAmount        String
+  firstChequeNo             String
+  firstChequeDate           String
+  secondChequeNo            String
+  secondChequeDate          String
+  dwoPaymentOrderNo         String
+  firstInstallmentChequeNo  String
+  secondInstallmentChequeNo String
+  subsidyStatus             String
+  emiAmount                 String
+  emiDate                   String
+
+  // ✅ New fields
+  duplicate                 Boolean   @default(false)   // flag for duplicates
+  remarks                   String?                    // optional admin remarks
+
+  createdAt                 DateTime  @default(now())
+  createdByUserId           Int
+  createdBy                 User      @relation(fields: [createdByUserId], references: [id])
+}
