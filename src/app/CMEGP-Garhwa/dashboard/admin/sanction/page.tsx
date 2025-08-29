@@ -260,7 +260,7 @@ export default function SanctionPage() {
               <h3 className="font-semibold text-lg mb-2">Guarantor Details</h3>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm">
                 <p><b>Name:</b> {selectedApplicant.guarantorName}</p>
-                <p><b>Father's Name:</b> {selectedApplicant.guarantorFather}</p>
+                <p><b>Father&apos;s Name:</b> {selectedApplicant.guarantorFather}</p>
                 <p><b>Address:</b> {selectedApplicant.guarantorAddress}</p>
                 <p><b>Office:</b> {selectedApplicant.guarantorOffice}</p>
                 <p><b>Occupation:</b> {selectedApplicant.guarantorOccupation}</p>

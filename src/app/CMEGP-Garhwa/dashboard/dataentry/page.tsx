@@ -240,7 +240,7 @@ export default function LoanApplicationWizard() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                   {[
                     { name: "guarantorName", label: "Guarantor Name" },
-                    { name: "guarantorFather", label: "Guarantor Father's Name" },
+                    { name: "guarantorFather", label: "Guarantor Father&apos;s Name" },
                     { name: "guarantorAddress", label: "Guarantor Address" },
                     { name: "guarantorOffice", label: "Guarantor Office Address" },
                     { name: "guarantorOccupation", label: "Occupation" },
