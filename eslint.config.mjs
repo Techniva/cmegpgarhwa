@@ -19,12 +19,6 @@ const eslintConfig = [
       "build/**",
       "next-env.d.ts",
     ],
-    rules: {
-      // 🚨 Turn errors into warnings so Vercel build won’t fail
-      "react/no-unescaped-entities": "off",
-      "@typescript-eslint/no-explicit-any": "off",
-      "@typescript-eslint/no-unused-vars": "warn",
-    },
   },
 ];
 
