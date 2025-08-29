@@ -17,7 +17,7 @@ type Translation = {
 const translations: Record<"en" | "hi", Translation> = {
   en: {
     govt: "GOVERNMENT OF JHARKHAND",
-    login: "Employee Login",
+    login: "Login",
     navLinks: [
       { label: "Home", href: "/" },
       { label: "Activities", href: "/activities" },
@@ -90,7 +90,9 @@ const Header: React.FC = () => {
           {/* Right Icons */}
           <div className="flex items-center space-x-4">
             <div className="h-8 w-8 rounded-full border-2 border-pink-500 flex items-center justify-center cursor-pointer">
+              <a href="/CMEGP-Garhwa/login" className="tooltip" data-tooltip="Profile Settings">
               <UserCog className="w-4 h-4 text-gray-700" />
+              </a>
             </div>
 
             {/* Mobile toggle */}

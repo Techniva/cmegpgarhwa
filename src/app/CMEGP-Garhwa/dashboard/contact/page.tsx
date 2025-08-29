@@ -8,10 +8,10 @@ export default function ContactPage() {
   const userName = session?.user?.name || session?.user?.email || "User";
 
   return (
-    <div className="w-full mx-auto px-4 space-y-6">
+    <div className="w-full mx-auto space-y-6">
       {/* Header */}
       <div className="bg-white shadow-md rounded-xl p-6 border-l-4 border-blue-600 hover:shadow-xl transition">
-        <h1 className="text-3xl font-bold text-gray-800">Contact Us</h1>
+        <h1 className="text-xl font-bold text-gray-800">Contact Us</h1>
         <p className="mt-2 text-gray-700">
           Hi {userName}, you can reach out to us using the form below or via the provided contact details.
         </p>

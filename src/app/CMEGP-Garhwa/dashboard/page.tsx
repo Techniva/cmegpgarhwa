@@ -21,18 +21,18 @@ export default function DashboardHomePage() {
   const userName = session?.user?.name || session?.user?.email || "User";
 
   return (
-    <div className="space-y-6 p-2 lg:p-4">
+    <div className="space-y-6">
       {/* Welcome Header */}
       <div className="bg-white shadow-md rounded-xl p-6 border-l-4 border-blue-600 hover:shadow-xl transition flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-800">Welcome, {userName}!</h1>
+          <h1 className="text-xl font-bold text-gray-800">Welcome, {userName}!</h1>
           <p className="mt-2 text-gray-700">
             This is your employee dashboard. Use the sidebar to navigate to different sections like Employee Info, Data Entry, Contact, and more.
           </p>
         </div>
         <button
           onClick={() => signOut({ callbackUrl: "/CMEGP-Garhwa/login" })}
-          className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition"
+          className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-full transition"
         >
           <LogOut className="h-5 w-5" />
           Logout

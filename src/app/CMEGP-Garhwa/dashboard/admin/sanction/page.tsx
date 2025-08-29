@@ -15,7 +15,6 @@ interface Applicant {
   status: "Pending" | "Approved" | "Rejected";
   createdAt: string;
 
-  // Extended fields
   gender?: string;
   address?: string;
   block?: string;
@@ -25,7 +24,6 @@ interface Applicant {
   familyIncome?: string;
   bankAccount?: string;
   ifsc?: string;
-  //sanctionYear?: string;
   disbursementYear?: string;
   village?: string;
   residentialCert?: string;
@@ -72,6 +70,7 @@ export default function SanctionPage() {
   const [loading, setLoading] = useState(true);
   const [duplicatesMap, setDuplicatesMap] = useState<Record<string, boolean>>({});
   const [selectedApplicant, setSelectedApplicant] = useState<Applicant | null>(null);
+  const [filterYear, setFilterYear] = useState<string>("All");
 
   useEffect(() => {
     if (status === "authenticated") {
@@ -116,13 +115,32 @@ export default function SanctionPage() {
     }
   };
 
- 
+  const sanctionYears = Array.from(new Set(applicants.map(a => a.sanctionYear))).sort();
+  const filteredApplicants =
+    filterYear === "All"
+      ? applicants
+      : applicants.filter(app => app.sanctionYear === filterYear);
+
   return (
-    <div className="px-2">
-      <h1 className="text-2xl font-bold text-gray-800 mb-4">Sanction</h1>
-      <p className="text-gray-700">
-        Welcome {session?.user?.name}, this is the <b>Admin-only Sanction Page</b>.
-      </p>
+    <div className="">
+      <h1 className="text-xl font-bold text-gray-800 mb-4">Sanction Application</h1>
+      
+      {/* Filter by Sanction Year */}
+      <div className="my-4">
+        <label className="mr-2 font-semibold">Filter by Sanction Year:</label>
+        <select
+          value={filterYear}
+          onChange={e => setFilterYear(e.target.value)}
+          className="border border-gray-300 rounded px-2 py-1"
+        >
+          <option value="All">All</option>
+          {sanctionYears.map(year => (
+            <option key={year} value={year}>
+              {year}
+            </option>
+          ))}
+        </select>
+      </div>
 
       <div className="mt-6 overflow-x-auto bg-white text-sm">
         <table className="min-w-full border-collapse">
@@ -136,14 +154,16 @@ export default function SanctionPage() {
               <th className="border border-gray-300 px-2 py-2">Sanction Year</th>
               <th className="border border-gray-300 px-2 py-2">Pan Card</th>
               <th className="border border-gray-300 px-2 py-2">Details</th>
-              {session?.user?.role === "employee" && <th className="border border-gray-300 px-2 py-2">Status</th>}
-              {/* Admin Action */}
-              {session?.user?.role === "admin" && <th className="border border-gray-300 px-2 py-2">Action</th>}
-             
+              {session?.user?.role === "employee" && (
+                <th className="border border-gray-300 px-2 py-2">Status</th>
+              )}
+              {session?.user?.role === "admin" && (
+                <th className="border border-gray-300 px-2 py-2">Action</th>
+              )}
             </tr>
           </thead>
           <tbody>
-            {applicants.map(app => {
+            {filteredApplicants.map(app => {
               const key = `${app.applicantName}-${app.dob}-${app.aadhar}`;
               const isDuplicate = duplicatesMap[key];
               return (
@@ -158,34 +178,28 @@ export default function SanctionPage() {
                   <td className="border border-gray-300 px-2 py-2 text-center">{app.mobile}</td>
                   <td className="border border-gray-300 px-2 py-2 text-center">{app.sanctionYear}</td>
                   <td className="border border-gray-300 px-2 py-2 text-center">{app.panCard}</td>
-
-                  {/* Details Button */}
                   <td className="border border-gray-300 px-2 py-2 text-center">
                     <button
                       onClick={() => setSelectedApplicant(app)}
-                      className="px-2 py-1 bg-blue-600 text-white rounded-full"
+                      className="px-3 py-1 bg-blue-600 text-white rounded-full"
                     >
                       View
                     </button>
                   </td>
-
-                  {/* Employee Status */}
                   {session?.user?.role === "employee" && (
                     <td className="border border-gray-300 px-2 py-2 text-center">{app.status}</td>
                   )}
-
-                  {/* Admin Action */}
                   {session?.user?.role === "admin" && (
                     <td className="border border-gray-300 px-2 py-2 space-x-2 text-center">
                       <button
                         onClick={() => handleAction(app.id, "Approved")}
-                        className="px-2 py-1 bg-green-600 text-white rounded-full"
+                        className="px-3 py-1 bg-green-600 text-white rounded-full"
                       >
                         Approve
                       </button>
                       <button
                         onClick={() => handleAction(app.id, "Rejected")}
-                        className="px-2 py-1 bg-red-600 text-white rounded-full"
+                        className="px-3 py-1 bg-red-600 text-white rounded-full"
                       >
                         Reject
                       </button>
@@ -206,9 +220,9 @@ export default function SanctionPage() {
             onClick={() => setSelectedApplicant(null)}
           />
           <div className="relative bg-white rounded-xl shadow-lg p-6 w-[1000px] max-h-[90vh] overflow-y-auto">
-            <h2 className="text-xl font-bold mb-4">Applicant Details</h2>
+            <h2 className="text-xl font-bold mb-4 text-center">Applicant Details</h2>
 
-            {/* Grouped sections (Applicant, Loan, Guarantor, etc.) */}
+            {/* Applicant Info */}
             <div className="mb-4 border-l-4 border-blue-600 pl-4">
               <h3 className="font-semibold text-lg mb-2">Applicant Information</h3>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm">
@@ -279,21 +293,24 @@ export default function SanctionPage() {
             {/* Meta Info */}
             <div className="mb-4 border-l-4 border-gray-600 pl-4">
               <h3 className="font-semibold text-lg mb-2">System Info</h3>
-              <p><b>Status:</b> {selectedApplicant.status}</p>
-              <p><b>Duplicate:</b> {selectedApplicant.duplicate ? "Yes" : "No"}</p>
-              <p><b>Remarks:</b> {selectedApplicant.remarks || "-"}</p>
-              <p><b>Created By:</b>{selectedApplicant.createdByUserId}</p>
-              <p><b>Created At:</b> {new Date(selectedApplicant.createdAt).toLocaleString()}</p>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm">
+                <p><b>Status:</b> {selectedApplicant.status}</p>
+                <p><b>Duplicate:</b> {selectedApplicant.duplicate ? "Yes" : "No"}</p>
+                <p><b>Remarks:</b> {selectedApplicant.remarks || "-"}</p>
+                <p><b>Created By:</b> {selectedApplicant.createdByUserId}</p>
+                <p><b>Created At:</b> {new Date(selectedApplicant.createdAt).toLocaleString()}</p>
+              </div>
             </div>
 
-            <div className="flex justify-end">
+            <div className="flex justify-center">
               <button
                 onClick={() => setSelectedApplicant(null)}
-                className="px-4 py-2 bg-gray-600 text-white rounded"
+                className="px-4 py-1 bg-gray-600 text-white rounded-full text-sm"
               >
                 Close
               </button>
             </div>
+            
           </div>
         </div>
       )}

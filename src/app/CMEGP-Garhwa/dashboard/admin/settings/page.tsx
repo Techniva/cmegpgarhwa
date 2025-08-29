@@ -18,8 +18,8 @@ export default function AdminSettingsPage() {
   if (!session || session.user?.role !== "admin") return null;
 
   return (
-    <div className="w-full mx-auto px-4 space-y-6">
-      <h1 className="text-3xl font-bold text-gray-800">Admin Settings</h1>
+    <div className="w-full mx-auto space-y-6">
+      <h1 className="text-xl font-bold text-gray-800">Admin Settings</h1>
       <p className="text-gray-600">
         Configure system-wide settings and preferences for administrators only.
       </p>

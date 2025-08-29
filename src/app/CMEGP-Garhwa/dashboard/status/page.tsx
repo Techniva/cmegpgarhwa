@@ -92,12 +92,12 @@ export default function EmployeeStatusPage() {
     fetchApplicants();
   }, []);
 
-  if (loading) return <div className="p-4 text-center">Loading...</div>;
+ // if (loading) return <div className="p-4 text-center">Loading...</div>;
   if (error) return <div className="p-4 text-center text-red-600">{error}</div>;
 
   return (
-    <div className="px-4 py-6">
-      <h1 className="text-2xl font-bold mb-4">My Applications</h1>
+    <div>
+      <h1 className="text-xl font-bold mb-4">My Applications</h1>
 
       <div className="overflow-x-auto bg-white text-sm ">
         <table className="min-w-full border-collapse">
@@ -134,7 +134,7 @@ export default function EmployeeStatusPage() {
                   <td className="border border-gray-300 px-2 py-2 text-center">
                     <button
                       onClick={() => setSelectedApplicant(app)}
-                      className="px-2 py-1 bg-blue-600 text-white rounded-full"
+                      className="px-3 py-1 bg-blue-600 text-white rounded-full"
                     >
                       View
                     </button>
@@ -184,10 +184,10 @@ export default function EmployeeStatusPage() {
 
             {/* You can copy Loan, Guarantor, Corporation & Payment, System Info sections here as read-only */}
 
-            <div className="flex justify-end mt-4">
+            <div className="flex justify-center mt-4">
               <button
                 onClick={() => setSelectedApplicant(null)}
-                className="px-4 py-2 bg-gray-600 text-white rounded"
+                className="px-4 py-2 bg-gray-600 text-white rounded-full"
               >
                 Close
               </button>

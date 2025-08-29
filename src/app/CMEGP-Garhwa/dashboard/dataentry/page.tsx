@@ -114,8 +114,8 @@ export default function LoanApplicationWizard() {
   };
 
   return (
-    <div className="w-full max-w-6xl mx-auto space-y-6 px-4 py-6">
-      <h1 className="text-2xl font-bold text-gray-800">Loan Application Form</h1>
+    <div className="w-full max-w-6xl mx-auto space-y-6">
+      <h1 className="text-xl font-bold text-gray-800">Loan Application Form</h1>
 
       <Formik
         initialValues={initialValues}
@@ -335,17 +335,17 @@ export default function LoanApplicationWizard() {
             {/* ---------- Navigation Buttons ---------- */}
             <div className="flex justify-between">
               {step > 0 && (
-                <button type="button" onClick={() => setStep(s => s - 1)} className="bg-gray-500 text-white px-4 py-2 rounded">
+                <button type="button" onClick={() => setStep(s => s - 1)} className="bg-gray-500 text-white px-4 py-2 rounded-full">
                   Back
                 </button>
               )}
               {step < 4 && (
-                <button type="button" onClick={() => handleNext(validateForm, setTouched)} className="bg-blue-600 text-white px-4 py-2 rounded">
+                <button type="button" onClick={() => handleNext(validateForm, setTouched)} className="bg-blue-600 text-white px-4 py-2 rounded-full">
                   Save & Next
                 </button>
               )}
               {step === 4 && (
-                <button type="button" className="bg-green-600 text-white px-4 py-2 rounded" onClick={() => setShowConfirm(true)}>
+                <button type="button" className="bg-green-600 text-white px-4 py-2 rounded-full" onClick={() => setShowConfirm(true)}>
                   Submit
                 </button>
               )}
